@@ -13,12 +13,18 @@ type HyperKeySublayer = {
   [key_code in KeyCode]?: LayerCommand;
 };
 
+export function generateManyHoldModifier(
+  ...pairs: [KeyCode, KeyCode][]
+): Manipulator[] {
+  return pairs.map(([input, hold]) => generateHoldModifier(input, hold));
+}
+
 /**
  * Generate a manipulator that will trigger a modifier key if held,
  * and the original key if pressed alone
  * https://gist.github.com/eytanhanig/6a35b718c9de5a232dd7d24d9f2abcfd#file-home_row_modifiers-to_alone-json-rb-L133
  */
-export function generateHoldModifierAndIfAlone(
+export function generateHoldModifier(
   input: KeyCode,
   hold: KeyCode,
 ): Manipulator {

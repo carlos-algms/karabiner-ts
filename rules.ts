@@ -1,10 +1,6 @@
 import fs from "fs";
 import { KarabinerConfig, KarabinerRules } from "./types";
-import {
-  createHyperSubLayers,
-  app,
-  generateHoldModifierAndIfAlone,
-} from "./utils";
+import { createHyperSubLayers, app, generateManyHoldModifier } from "./utils";
 
 const rules: KarabinerRules[] = [
   {
@@ -47,8 +43,13 @@ const rules: KarabinerRules[] = [
   {
     description: "D -> Left Command",
     manipulators: [
-      generateHoldModifierAndIfAlone("d", "left_command"),
-      generateHoldModifierAndIfAlone("k", "right_command"),
+      ...generateManyHoldModifier(
+        ["d", "left_command"],
+        ["k", "right_command"],
+        ["semicolon", "right_control"],
+        ["a", "left_alt"],
+        ["l", "right_alt"],
+      ),
     ],
   },
 
