@@ -5,7 +5,7 @@
     "lib": ["ES2022"],
     "allowSyntheticDefaultImports": true
   },
-  "include": ["rules.ts", "types.ts", "utils.ts"],
+  "include": ["*.ts"],
   "exclude": ["node_modules"],
   "typeAcquisition": {
     "include": ["jquery", "google.analytics"]
