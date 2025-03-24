@@ -1,47 +1,36 @@
 import fs from "fs";
-import { KarabinerConfig, KarabinerRules } from "./types";
-import { createHyperSubLayers, app, generateManyHoldModifier } from "./utils";
+import { KarabinerConfig, KarabinerRule } from "./types";
+import {
+  createHyperSubLayers,
+  app,
+  generateManyHoldModifier,
+  createSubLayer,
+} from "./utils";
 
-const rules: KarabinerRules[] = [
+const rules: KarabinerRule[] = [
   {
     description: "Hyper Key (⌃⌥⇧⌘)",
     manipulators: [
       {
         description: "quote -> Hyper Key",
-        from: {
-          key_code: "quote",
-          modifiers: {
-            optional: ["any"],
-          },
-        },
-        to: [
-          {
-            set_variable: {
-              name: "hyper",
-              value: 1,
-            },
-          },
-        ],
-        to_after_key_up: [
-          {
-            set_variable: {
-              name: "hyper",
-              value: 0,
-            },
-          },
-        ],
-        to_if_alone: [
-          {
-            key_code: "quote",
-          },
-        ],
+        from: { key_code: "quote", modifiers: { optional: ["any"] } },
+        to: [{ set_variable: { name: "hyper", value: 1 } }],
+        to_after_key_up: [{ set_variable: { name: "hyper", value: 0 } }],
+        to_if_alone: [{ key_code: "quote" }],
         type: "basic",
       },
     ],
   },
 
+  ...createSubLayer("s", {
+    h: { to: [{ key_code: "left_arrow" }] },
+    j: { to: [{ key_code: "down_arrow" }] },
+    k: { to: [{ key_code: "up_arrow" }] },
+    l: { to: [{ key_code: "right_arrow" }] },
+  }),
+
   {
-    description: "D -> Left Command",
+    description: "Home Row Mods",
     manipulators: [
       ...generateManyHoldModifier(
         ["d", "left_command"],

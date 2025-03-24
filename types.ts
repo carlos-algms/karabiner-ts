@@ -6,13 +6,13 @@ export type KarabinerProfile = {
   name: string;
   selected: boolean;
   complex_modifications?: {
-    rules: KarabinerRules[];
+    rules: KarabinerRule[];
     parameters?: Parameters;
   };
   virtual_hid_keyboard: { keyboard_type_v2: "ansi" | "iso" };
 };
 
-export interface KarabinerRules {
+export interface KarabinerRule {
   description?: string;
   manipulators?: Manipulator[];
 }
@@ -114,7 +114,7 @@ export interface SimultaneousOptions {
   detect_key_down_uninterruptedly?: boolean;
 }
 
-type ModifiersKeys =
+export type ModifiersKeys =
   | "caps_lock"
   | "left_command"
   | "left_control"

@@ -1,4 +1,4 @@
-import { To, KeyCode, Manipulator, KarabinerRules } from "./types";
+import { To, KeyCode, Manipulator, KarabinerRule } from "./types";
 
 /**
  * Custom way to describe a command in a layer
@@ -34,7 +34,7 @@ export function generateHoldModifier(
     to_if_held_down: [{ key_code: hold }],
     to_delayed_action: { to_if_canceled: [{ key_code: input }] },
     parameters: {
-      "basic.to_if_alone_timeout_milliseconds": 300,
+      "basic.to_if_alone_timeout_milliseconds": 200,
       "basic.to_if_held_down_threshold_milliseconds": 200,
       "basic.to_delayed_action_delay_milliseconds": 100,
     },
@@ -134,7 +134,7 @@ export function createHyperSubLayer(
  */
 export function createHyperSubLayers(subLayers: {
   [key_code in KeyCode]?: HyperKeySublayer | LayerCommand;
-}): KarabinerRules[] {
+}): KarabinerRule[] {
   const allSubLayerVariables = (
     Object.keys(subLayers) as (keyof typeof subLayers)[]
   ).map((sublayer_key) => generateSubLayerVariableName(sublayer_key));
@@ -177,6 +177,55 @@ export function createHyperSubLayers(subLayers: {
           ),
         },
   );
+}
+
+export function createSubLayer(
+  leader: KeyCode,
+  subLayers: {
+    [key_code in KeyCode]?: LayerCommand;
+  },
+): KarabinerRule[] {
+  const variableName = `sublayer_${leader}`;
+
+  return [
+    {
+      description: `SubLayer ${leader}`,
+      manipulators: [
+        {
+          type: "basic",
+          from: { key_code: leader, modifiers: { optional: ["any"] } },
+          to_if_alone: [{ key_code: leader, halt: true }],
+          to_if_held_down: [{ set_variable: { name: variableName, value: 1 } }],
+          to_after_key_up: [{ set_variable: { name: variableName, value: 0 } }],
+          to_delayed_action: { to_if_canceled: [{ key_code: leader }] },
+          parameters: {
+            "basic.to_if_alone_timeout_milliseconds": 300,
+            "basic.to_if_held_down_threshold_milliseconds": 200,
+            "basic.to_delayed_action_delay_milliseconds": 100,
+          },
+        },
+        ...Object.entries(subLayers).map(
+          ([key, { to, description }]) =>
+            ({
+              type: "basic",
+              description: description || `Hold ${leader} + ${key}`,
+              to,
+              from: {
+                key_code: key as KeyCode,
+                modifiers: { optional: ["any"] },
+              },
+              conditions: [
+                {
+                  type: "variable_if",
+                  name: variableName,
+                  value: 1,
+                },
+              ],
+            }) satisfies Manipulator,
+        ),
+      ],
+    },
+  ];
 }
 
 function generateSubLayerVariableName(key: KeyCode) {
