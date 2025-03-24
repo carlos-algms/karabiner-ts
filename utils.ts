@@ -14,6 +14,29 @@ type HyperKeySublayer = {
 };
 
 /**
+ * Generate a manipulator that will trigger a modifier key if held,
+ * and the original key if pressed alone
+ * https://gist.github.com/eytanhanig/6a35b718c9de5a232dd7d24d9f2abcfd#file-home_row_modifiers-to_alone-json-rb-L133
+ */
+export function generateHoldModifierAndIfAlone(
+  input: KeyCode,
+  hold: KeyCode,
+): Manipulator {
+  return {
+    from: { key_code: input, modifiers: { optional: ["any"] } },
+    to_if_alone: [{ key_code: input, halt: true }],
+    to_if_held_down: [{ key_code: hold }],
+    to_delayed_action: { to_if_canceled: [{ key_code: input }] },
+    parameters: {
+      "basic.to_if_alone_timeout_milliseconds": 300,
+      "basic.to_if_held_down_threshold_milliseconds": 200,
+      "basic.to_delayed_action_delay_milliseconds": 100,
+    },
+    type: "basic",
+  };
+}
+
+/**
  * Create a Hyper Key sublayer, where every command is prefixed with a key
  * e.g. Hyper + O ("Open") is the "open applications" layer, I can press
  * e.g. Hyper + O + G ("Google Chrome") to open Chrome
@@ -21,7 +44,7 @@ type HyperKeySublayer = {
 export function createHyperSubLayer(
   sublayer_key: KeyCode,
   commands: HyperKeySublayer,
-  allSubLayerVariables: string[]
+  allSubLayerVariables: string[],
 ): Manipulator[] {
   const subLayerVariableName = generateSubLayerVariableName(sublayer_key);
 
@@ -60,7 +83,7 @@ export function createHyperSubLayer(
       conditions: [
         ...allSubLayerVariables
           .filter(
-            (subLayerVariable) => subLayerVariable !== subLayerVariableName
+            (subLayerVariable) => subLayerVariable !== subLayerVariableName,
           )
           .map((subLayerVariable) => ({
             type: "variable_if" as const,
@@ -93,7 +116,7 @@ export function createHyperSubLayer(
             value: 1,
           },
         ],
-      })
+      }),
     ),
   ];
 }
@@ -144,9 +167,9 @@ export function createHyperSubLayers(subLayers: {
           manipulators: createHyperSubLayer(
             key as KeyCode,
             value,
-            allSubLayerVariables
+            allSubLayerVariables,
           ),
-        }
+        },
   );
 }
 

@@ -1,3 +1,17 @@
+export type KarabinerConfig = {
+  profiles: KarabinerProfile[];
+};
+
+export type KarabinerProfile = {
+  name: string;
+  selected: boolean;
+  complex_modifications?: {
+    rules: KarabinerRules[];
+    parameters?: Parameters;
+  };
+  virtual_hid_keyboard: { keyboard_type_v2: "ansi" | "iso" };
+};
+
 export interface KarabinerRules {
   description?: string;
   manipulators?: Manipulator[];
@@ -8,14 +22,21 @@ export interface Manipulator {
   type: "basic";
   from: From;
   to?: To[];
+  to_if_held_down?: To[];
   to_after_key_up?: To[];
   to_if_alone?: To[];
+  to_delayed_action?: {
+    to_if_canceled?: To[];
+  };
   parameters?: Parameters;
   conditions?: Conditions[];
 }
 
 export interface Parameters {
+  "basic.to_if_alone_timeout_milliseconds"?: number;
+  "basic.to_if_held_down_threshold_milliseconds"?: number;
   "basic.simultaneous_threshold_milliseconds"?: number;
+  "basic.to_delayed_action_delay_milliseconds"?: number;
 }
 
 type Conditions =
@@ -128,6 +149,8 @@ export interface Modifiers {
 
 export interface To {
   key_code?: KeyCode;
+  lazy?: boolean;
+  halt?: boolean;
   modifiers?: ModifiersKeys[];
   shell_command?: string;
   set_variable?: {

@@ -5,13 +5,14 @@
   "author": "Max Stoiber <contact@mxstbr.com>",
   "license": "MIT",
   "devDependencies": {
-    "@types/node": "^18.7.19",
+    "@types/node": "^22.13.13",
     "nodemon": "^2.0.20",
-    "prettier": "^2.7.1",
+    "prettier": "^3.5.3",
     "tsm": "^2.2.2"
   },
   "scripts": {
     "build": "tsm rules.ts",
-    "watch": "nodemon --exec yarn build -e ts"
-  }
+    "watch": "nodemon --exec pnpm build -e ts"
+  },
+  "packageManager": "pnpm@10.6.5"
 }

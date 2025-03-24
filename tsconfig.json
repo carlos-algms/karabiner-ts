@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "target": "es6",
+    "lib": ["ES2022"],
+    "allowSyntheticDefaultImports": true
+  },
+  "include": ["rules.ts", "types.ts", "utils.ts"],
+  "exclude": ["node_modules"],
+  "typeAcquisition": {
+    "include": ["jquery", "google.analytics"]
+  }
+}
