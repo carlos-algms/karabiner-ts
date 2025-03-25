@@ -14,9 +14,10 @@ const rules: KarabinerRule[] = [
       {
         description: "quote -> Hyper Key",
         from: { key_code: "quote", modifiers: { optional: ["any"] } },
-        to: [{ set_variable: { name: "hyper", value: 1 } }],
+        to_if_alone: [{ key_code: "quote", halt: true }],
+        to_delayed_action: { to_if_canceled: [{ key_code: "quote" }] },
+        to_if_held_down: [{ set_variable: { name: "hyper", value: 1 } }],
         to_after_key_up: [{ set_variable: { name: "hyper", value: 0 } }],
-        to_if_alone: [{ key_code: "quote" }],
         type: "basic",
       },
     ],
@@ -65,8 +66,8 @@ const configContent: KarabinerConfig = {
         parameters: {
           "basic.simultaneous_threshold_milliseconds": 80,
           "basic.to_delayed_action_delay_milliseconds": 100,
-          "basic.to_if_alone_timeout_milliseconds": 200,
-          "basic.to_if_held_down_threshold_milliseconds": 200,
+          "basic.to_if_alone_timeout_milliseconds": 150,
+          "basic.to_if_held_down_threshold_milliseconds": 150,
         },
       },
     },

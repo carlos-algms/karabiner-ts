@@ -21,7 +21,20 @@
                     ]
                   }
                 },
-                "to": [
+                "to_if_alone": [
+                  {
+                    "key_code": "quote",
+                    "halt": true
+                  }
+                ],
+                "to_delayed_action": {
+                  "to_if_canceled": [
+                    {
+                      "key_code": "quote"
+                    }
+                  ]
+                },
+                "to_if_held_down": [
                   {
                     "set_variable": {
                       "name": "hyper",
@@ -35,11 +48,6 @@
                       "name": "hyper",
                       "value": 0
                     }
-                  }
-                ],
-                "to_if_alone": [
-                  {
-                    "key_code": "quote"
                   }
                 ],
                 "type": "basic"
@@ -506,8 +514,8 @@
         "parameters": {
           "basic.simultaneous_threshold_milliseconds": 80,
           "basic.to_delayed_action_delay_milliseconds": 100,
-          "basic.to_if_alone_timeout_milliseconds": 200,
-          "basic.to_if_held_down_threshold_milliseconds": 200
+          "basic.to_if_alone_timeout_milliseconds": 150,
+          "basic.to_if_held_down_threshold_milliseconds": 150
         }
       }
     }
