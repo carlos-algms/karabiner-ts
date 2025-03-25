@@ -23,6 +23,18 @@ const rules: KarabinerRule[] = [
     ],
   },
 
+  ...createHyperSubLayers({
+    // o = "Open" applications
+    o: {
+      g: app("Google Chrome"),
+      f: app("Firefox"),
+      s: app("Slack"),
+      t: app("Kitty"),
+      e: app("Finder"),
+      p: app("Spotify"),
+    },
+  }),
+
   ...createSubLayer("s", {
     h: { to: [{ key_code: "left_arrow" }] },
     j: { to: [{ key_code: "down_arrow" }] },
@@ -42,17 +54,6 @@ const rules: KarabinerRule[] = [
       ),
     ],
   },
-
-  ...createHyperSubLayers({
-    // o = "Open" applications
-    o: {
-      g: app("Google Chrome"),
-      s: app("Slack"),
-      t: app("Kitty"),
-      f: app("Finder"),
-      p: app("Spotify"),
-    },
-  }),
 ];
 
 const configContent: KarabinerConfig = {
