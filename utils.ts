@@ -33,11 +33,6 @@ export function generateHoldModifier(
     to_if_alone: [{ key_code: input, halt: true }],
     to_if_held_down: [{ key_code: hold }],
     to_delayed_action: { to_if_canceled: [{ key_code: input }] },
-    parameters: {
-      "basic.to_if_alone_timeout_milliseconds": 200,
-      "basic.to_if_held_down_threshold_milliseconds": 200,
-      "basic.to_delayed_action_delay_milliseconds": 100,
-    },
     type: "basic",
   };
 }

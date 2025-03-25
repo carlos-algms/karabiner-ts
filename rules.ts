@@ -62,7 +62,12 @@ const configContent: KarabinerConfig = {
       virtual_hid_keyboard: { keyboard_type_v2: "ansi" },
       complex_modifications: {
         rules,
-        parameters: { "basic.simultaneous_threshold_milliseconds": 200 },
+        parameters: {
+          "basic.simultaneous_threshold_milliseconds": 80,
+          "basic.to_delayed_action_delay_milliseconds": 100,
+          "basic.to_if_alone_timeout_milliseconds": 200,
+          "basic.to_if_held_down_threshold_milliseconds": 200,
+        },
       },
     },
   ],
