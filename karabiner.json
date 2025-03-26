@@ -12,9 +12,9 @@
             "description": "Hyper Key (⌃⌥⇧⌘)",
             "manipulators": [
               {
-                "description": "quote -> Hyper Key",
+                "description": "J -> Hyper Key",
                 "from": {
-                  "key_code": "quote",
+                  "key_code": "j",
                   "modifiers": {
                     "optional": [
                       "any"
@@ -23,14 +23,14 @@
                 },
                 "to_if_alone": [
                   {
-                    "key_code": "quote",
+                    "key_code": "j",
                     "halt": true
                   }
                 ],
                 "to_delayed_action": {
                   "to_if_canceled": [
                     {
-                      "key_code": "quote"
+                      "key_code": "j"
                     }
                   ]
                 },
