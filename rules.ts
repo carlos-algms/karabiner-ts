@@ -8,21 +8,6 @@ import {
 } from "./utils";
 
 const rules: KarabinerRule[] = [
-  {
-    description: "Hyper Key (⌃⌥⇧⌘)",
-    manipulators: [
-      {
-        description: "J -> Hyper Key",
-        from: { key_code: "j", modifiers: { optional: ["any"] } },
-        to_if_alone: [{ key_code: "j", halt: true }],
-        to_delayed_action: { to_if_canceled: [{ key_code: "j" }] },
-        to_if_held_down: [{ set_variable: { name: "hyper", value: 1 } }],
-        to_after_key_up: [{ set_variable: { name: "hyper", value: 0 } }],
-        type: "basic",
-      },
-    ],
-  },
-
   ...createHyperSubLayers({
     // o = "Open" applications
     o: {
@@ -41,6 +26,21 @@ const rules: KarabinerRule[] = [
     k: { to: [{ key_code: "up_arrow" }] },
     l: { to: [{ key_code: "right_arrow" }] },
   }),
+
+  {
+    description: "Hyper Key (⌃⌥⇧⌘)",
+    manipulators: [
+      {
+        description: "J -> Hyper Key",
+        from: { key_code: "j", modifiers: { optional: ["any"] } },
+        to_if_alone: [{ key_code: "j", halt: true }],
+        to_delayed_action: { to_if_canceled: [{ key_code: "j" }] },
+        to_if_held_down: [{ set_variable: { name: "hyper", value: 1 } }],
+        to_after_key_up: [{ set_variable: { name: "hyper", value: 0 } }],
+        type: "basic",
+      },
+    ],
+  },
 
   {
     description: "Home Row Mods",
