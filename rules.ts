@@ -13,10 +13,12 @@ const rules: KarabinerRule[] = [
     o: {
       g: app("Google Chrome"),
       f: app("Firefox"),
+      z: app("Zen Browser"),
       s: app("Slack"),
       t: app("Kitty"),
       e: app("Finder"),
       p: app("Spotify"),
+      a: app("Arc"),
     },
   }),
 
